@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TableHeaderView" customModule="TableAdapterExample" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am the table header view" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ki-vZ-bKS">
+                    <rect key="frame" x="59" y="75" width="202" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1o4-07-2Q7">
+                    <rect key="frame" x="131" y="235" width="58" height="30"/>
+                    <state key="normal" title="Hide me">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" title="Show me"/>
+                    <connections>
+                        <action selector="_buttonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="H7V-P9-Mg7"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="8Ki-vZ-bKS" secondAttribute="trailing" constant="59" id="BeE-B2-z9e"/>
+                <constraint firstItem="8Ki-vZ-bKS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="59" id="MZ2-mg-c2t"/>
+                <constraint firstItem="1o4-07-2Q7" firstAttribute="top" secondItem="8Ki-vZ-bKS" secondAttribute="bottom" constant="139.5" id="bmE-Kp-lRt"/>
+                <constraint firstAttribute="bottom" secondItem="1o4-07-2Q7" secondAttribute="bottom" constant="35" id="pHh-w9-fnV"/>
+                <constraint firstAttribute="centerX" secondItem="1o4-07-2Q7" secondAttribute="centerX" id="rnZ-Vz-ye9"/>
+                <constraint firstItem="8Ki-vZ-bKS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="75" id="vcB-Og-OLr"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="button" destination="1o4-07-2Q7" id="nkx-pu-63W"/>
+                <outlet property="titleLabel" destination="8Ki-vZ-bKS" id="g6T-H5-E9r"/>
+            </connections>
+        </view>
+    </objects>
+</document>

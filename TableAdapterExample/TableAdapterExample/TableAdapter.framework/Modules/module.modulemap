@@ -1,0 +1,10 @@
+framework module TableAdapter {
+  umbrella header "TableAdapter.h"
+
+  export *
+  module * { export * }
+}
+
+module TableAdapter.Swift {
+    header "TableAdapter-Swift.h"
+}
