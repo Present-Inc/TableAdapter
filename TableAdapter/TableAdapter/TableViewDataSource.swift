@@ -20,7 +20,8 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             tableView.delegate = self
         }
     }
-    public var delegate: TableViewDataSourceDelegate?
+    
+    public weak var delegate: TableViewDataSourceDelegate?
     
     public internal(set) var sections: [TableViewSection] = [TableViewSection]()
     public var numberOfSections: Int {
