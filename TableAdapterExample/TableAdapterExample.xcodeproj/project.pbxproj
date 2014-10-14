@@ -13,6 +13,11 @@
 		7C548EF519EDC97F00A7EDB6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C548EF419EDC97F00A7EDB6 /* Images.xcassets */; };
 		7C548EF819EDC97F00A7EDB6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C548EF619EDC97F00A7EDB6 /* LaunchScreen.xib */; };
 		7C548F0419EDC97F00A7EDB6 /* TableAdapterExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C548F0319EDC97F00A7EDB6 /* TableAdapterExampleTests.swift */; };
+		7C548F1719EDCB2700A7EDB6 /* TableAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C548F1619EDCB2700A7EDB6 /* TableAdapter.framework */; };
+		7C548F1D19EDCB3E00A7EDB6 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C548F1919EDCB3E00A7EDB6 /* TableHeaderView.swift */; };
+		7C548F1E19EDCB3E00A7EDB6 /* TableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C548F1A19EDCB3E00A7EDB6 /* TableHeaderView.xib */; };
+		7C548F1F19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C548F1B19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift */; };
+		7C548F2019EDCB3E00A7EDB6 /* TableSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C548F1C19EDCB3E00A7EDB6 /* TableSectionHeaderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,11 @@
 		7C548EFD19EDC97F00A7EDB6 /* TableAdapterExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableAdapterExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C548F0219EDC97F00A7EDB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C548F0319EDC97F00A7EDB6 /* TableAdapterExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAdapterExampleTests.swift; sourceTree = "<group>"; };
+		7C548F1619EDCB2700A7EDB6 /* TableAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TableAdapter.framework; sourceTree = "<group>"; };
+		7C548F1919EDCB3E00A7EDB6 /* TableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableHeaderView.swift; path = Views/TableHeaderView.swift; sourceTree = "<group>"; };
+		7C548F1A19EDCB3E00A7EDB6 /* TableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableHeaderView.xib; path = Views/TableHeaderView.xib; sourceTree = "<group>"; };
+		7C548F1B19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableSectionHeaderView.swift; path = Views/TableSectionHeaderView.swift; sourceTree = "<group>"; };
+		7C548F1C19EDCB3E00A7EDB6 /* TableSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableSectionHeaderView.xib; path = Views/TableSectionHeaderView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C548F1719EDCB2700A7EDB6 /* TableAdapter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +88,8 @@
 		7C548EEA19EDC97F00A7EDB6 /* TableAdapterExample */ = {
 			isa = PBXGroup;
 			children = (
+				7C548F1819EDCB3500A7EDB6 /* Views */,
+				7C548F1619EDCB2700A7EDB6 /* TableAdapter.framework */,
 				7C548EED19EDC97F00A7EDB6 /* AppDelegate.swift */,
 				7C548EEF19EDC97F00A7EDB6 /* ViewController.swift */,
 				7C548EF119EDC97F00A7EDB6 /* Main.storyboard */,
@@ -110,6 +123,17 @@
 				7C548F0219EDC97F00A7EDB6 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7C548F1819EDCB3500A7EDB6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7C548F1919EDCB3E00A7EDB6 /* TableHeaderView.swift */,
+				7C548F1A19EDCB3E00A7EDB6 /* TableHeaderView.xib */,
+				7C548F1B19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift */,
+				7C548F1C19EDCB3E00A7EDB6 /* TableSectionHeaderView.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,8 +216,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C548F1E19EDCB3E00A7EDB6 /* TableHeaderView.xib in Resources */,
 				7C548EF319EDC97F00A7EDB6 /* Main.storyboard in Resources */,
 				7C548EF819EDC97F00A7EDB6 /* LaunchScreen.xib in Resources */,
+				7C548F2019EDCB3E00A7EDB6 /* TableSectionHeaderView.xib in Resources */,
 				7C548EF519EDC97F00A7EDB6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +238,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C548F1F19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift in Sources */,
+				7C548F1D19EDCB3E00A7EDB6 /* TableHeaderView.swift in Sources */,
 				7C548EF019EDC97F00A7EDB6 /* ViewController.swift in Sources */,
 				7C548EEE19EDC97F00A7EDB6 /* AppDelegate.swift in Sources */,
 			);
@@ -338,6 +366,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TableAdapterExample",
+				);
 				INFOPLIST_FILE = TableAdapterExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -348,6 +380,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TableAdapterExample",
+				);
 				INFOPLIST_FILE = TableAdapterExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -407,6 +443,7 @@
 				7C548F0919EDC97F00A7EDB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7C548F0A19EDC97F00A7EDB6 /* Build configuration list for PBXNativeTarget "TableAdapterExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -415,6 +452,7 @@
 				7C548F0C19EDC97F00A7EDB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
