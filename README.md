@@ -7,13 +7,12 @@ A replacement for `UITableViewDataSource` and `UITableViewDelegate`
 Implementing `UITableViewDataSource` and `UITableViewDelegate` methods in each view controller is a pain. Not to mention when using different cells in the table view. This framework aims to solve the issue by providing an object to represent a table view section and a controller to manage multiple sections.
 
 ###Example:
-To set up your table view, you must:
-1. Initialize an instance of `TableViewDataSource` (Either in a storyboard or code).
-2. Set the `TableViewDataSource`'s `tableView` property (Either in storyboard or code).
-3. Manually register the cell classes to the `tableView` using `registerClass:forCellReuseIdentifier:` or `registerNib:forCellReuseIdentifier:`
-4. In `viewDidLoad`, configure a `TableViewSection`, and configure the properties as you wish.
-  - Only the properties that are not explicitly marked as optional (`?`) are required.
-5. Add the section to the data source
+To set up your table view, you must:  
+1. Initialize an instance of `TableViewDataSource` (Either in a storyboard or code).  
+2. Set the `TableViewDataSource`'s `tableView` property (Either in storyboard or code).  
+3. Manually register the cell classes to the `tableView` using `registerClass:forCellReuseIdentifier:` or `registerNib:forCellReuseIdentifier:`.  
+4. In `viewDidLoad`, configure a `TableViewSection`, and configure the properties as you wish. The properties that are not explicitly marked as optional (`?`) are required to be set before the section is added to the data source.  
+5. Add the section to the data source.  
 
 ````
 class ExampleViewController: UIViewController {
