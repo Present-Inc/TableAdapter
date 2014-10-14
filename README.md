@@ -6,7 +6,7 @@ A replacement for `UITableViewDataSource` and `UITableViewDelegate`
 ###Background
 Implementing `UITableViewDataSource` and `UITableViewDelegate` methods in each view controller is a pain. Not to mention when using different cells in the table view. This framework aims to solve the issue by providing an object to represent a table view section and a controller to manage multiple sections.
 
-###Example:
+###Example
 To set up your table view, you must:  
 1. Initialize an instance of `TableViewDataSource` (Either in a storyboard or code).  
 2. Set the `TableViewDataSource`'s `tableView` property (Either in storyboard or code).  
@@ -50,6 +50,10 @@ class ExampleViewController: UIViewController {
 }
 ````
 
+###Installation
+Add the library as a git submodule and then add the `.xcodeproj` to your project
+**Detailed instructions coming soon**
+
 ###Question? Need help?
 File an issue and we'll be happy to help.
 
@@ -58,3 +62,4 @@ File an issue and we'll be happy to help.
  - [ ] Documentation
  - [ ] Tests
  - [ ] Exceptions for `DEBUG` builds
+
