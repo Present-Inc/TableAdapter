@@ -385,6 +385,7 @@
 				7CC24A1D19E377A1009FD8DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7CC24A1E19E377A1009FD8DD /* Build configuration list for PBXNativeTarget "TableAdapterTests" */ = {
 			isa = XCConfigurationList;
@@ -393,6 +394,7 @@
 				7CC24A2019E377A1009FD8DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

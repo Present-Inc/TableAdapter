@@ -2,7 +2,7 @@
 //  TableAdapterExampleTests.swift
 //  TableAdapterExampleTests
 //
-//  Created by Justin Makaila on 10/6/14.
+//  Created by Justin Makaila on 10/14/14.
 //  Copyright (c) 2014 Present. All rights reserved.
 //
 

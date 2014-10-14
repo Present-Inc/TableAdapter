@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:TableAdapter/TableAdapter.xcodeproj">
+      location = "container:TableAdapter.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:TableAdapterExample/TableAdapterExample.xcodeproj">
