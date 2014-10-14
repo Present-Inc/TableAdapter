@@ -53,6 +53,10 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     public func addSections(sections: [TableViewSection]) {
         self.sections.extend(sections)
         
+        for section in sections {
+            section.controller = self
+        }
+        
         self.tableView.reloadData()
     }
     
@@ -62,12 +66,19 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     
     public func insertSection(section: TableViewSection, atIndex index: Int) {
         self.sections.insert(section, atIndex: index)
+        
+        section.controller = self
+        
         self.tableView.reloadData()
     }
     
     // MARK: Delete Sections
     
     public func deleteAllSections() {
+        for section in sections {
+            section.controller = nil
+        }
+        
         self.sections.removeAll(keepCapacity: false)
         self.tableView.reloadData()
     }
@@ -81,9 +92,14 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         
         var indexSet = NSIndexSet(indexesInRange: objcRange)
         self.tableView.deleteSections(indexSet, withRowAnimation: .None)
+        
+        // TODO: Set the sections controller to nil
     }
     
     public func deleteSectionAtIndex(index: Int) {
+        var section = self.sections[index]
+        section.controller = nil
+        
         self.sections.removeAtIndex(index)
         self.tableView.reloadData()
     }
@@ -109,8 +125,12 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     
     public func replaceSectionAtIndex(index: Int, withSection section: TableViewSection) {
         if index >= 0 && index < self.numberOfSections {
+            var oldSection = self.sections[index]
+            oldSection.controller = nil
             self.sections.removeAtIndex(index)
+            
             self.sections.insert(section, atIndex: index)
+            section.controller = self
         }
         
         self.tableView.reloadData()
@@ -144,11 +164,11 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         
         return nil
     }
-    
-    // MARK:
-    // MARK: UITableView
-    // MARK:
-    // MARK: UITableViewDataSource
+
+}
+
+// MARK: - UITableViewDataSource
+extension TableViewDataSource: UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.sections.count
@@ -182,7 +202,10 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         return cell
     }
     
-    // MARK: UITableViewDelegate
+}
+
+// MARK: - UITableViewDelegate
+extension TableViewDataSource: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return self.tableSectionForIndex(section)?.headerConfigurationBlock?(section: section) ?? nil
@@ -227,4 +250,5 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
         delegate?.tableViewDidScroll?(scrollView)
     }
+    
 }
