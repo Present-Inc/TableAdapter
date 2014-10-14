@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7CC24A0E19E377A1009FD8DD /* TableAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CC24A0D19E377A1009FD8DD /* TableAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7CC24A1819E377A1009FD8DD /* TableAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24A1719E377A1009FD8DD /* TableAdapterTests.swift */; };
+		7CC24A2A19E37801009FD8DD /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24A2919E37801009FD8DD /* TableSection.swift */; };
+		7CC24A2C19E37819009FD8DD /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC24A2B19E37819009FD8DD /* TableViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +20,8 @@
 		7CC24A1319E377A1009FD8DD /* TableAdapterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableAdapterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CC24A1619E377A1009FD8DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CC24A1719E377A1009FD8DD /* TableAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAdapterTests.swift; sourceTree = "<group>"; };
+		7CC24A2919E37801009FD8DD /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
+		7CC24A2B19E37819009FD8DD /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				7CC24A0D19E377A1009FD8DD /* TableAdapter.h */,
+				7CC24A2919E37801009FD8DD /* TableSection.swift */,
+				7CC24A2B19E37819009FD8DD /* TableViewDataSource.swift */,
 				7CC24A0B19E377A1009FD8DD /* Supporting Files */,
 			);
 			path = TableAdapter;
@@ -196,6 +202,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CC24A2C19E37819009FD8DD /* TableViewDataSource.swift in Sources */,
+				7CC24A2A19E37801009FD8DD /* TableSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +306,7 @@
 		7CC24A1C19E377A1009FD8DD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -307,12 +316,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		7CC24A1D19E377A1009FD8DD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
