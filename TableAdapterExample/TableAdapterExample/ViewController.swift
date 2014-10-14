@@ -12,6 +12,7 @@ import TableAdapter
 class ViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     var tableDataSource = TableViewDataSource()
+    var sectionOne = TableViewSection()
     
     var tableHeaderView: TableHeaderView?
     
@@ -21,15 +22,23 @@ class ViewController: UIViewController {
         "from",
         "the",
         "data",
-        "source"
+        "source",
+        "and",
+        "this",
+        "is",
+        "another",
+        "bunch",
+        "of",
+        "cells"
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // !!!: The table view header view must be configured separately
         self.setupHeaderView()
         
-        // If not using storyboards or .xib's, cell classes must be manually registered with table view
+        // !!!: If not using storyboards or .xib's, cell classes must be manually registered with table view
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
         tableView.registerNib(TableSectionHeaderView.nib(), forHeaderFooterViewReuseIdentifier: "HeaderView")
         
@@ -37,11 +46,10 @@ class ViewController: UIViewController {
         tableDataSource.tableView = tableView
         
         // !!!: Configure the section
-        var sectionOne = TableViewSection()
         sectionOne.objects = dataSource
         sectionOne.rowHeight = 50
-        sectionOne.sectionHeaderHeight = 75
-        sectionOne.sectionFooterHeight = 15
+        sectionOne.sectionHeaderHeight = 35
+        sectionOne.sectionFooterHeight = 35
         sectionOne.cellIdentifierBlock = { _, _ in return "TestCell" }
         sectionOne.headerConfigurationBlock = headerConfiguration
         sectionOne.cellConfigurationBlock = cellConfiguration
@@ -89,6 +97,5 @@ class ViewController: UIViewController {
     func cellSelectionBlock(cell: UITableViewCell, indexPath: NSIndexPath) {
         println("You selected \(cell) in section \(indexPath.section) at row \(indexPath.row)")
     }
-
 }
 
