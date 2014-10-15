@@ -171,7 +171,7 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
 extension TableViewDataSource: UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.sections.count
+        return self.numberOfSections
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
