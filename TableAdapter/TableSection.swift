@@ -22,12 +22,31 @@ public class TableViewSection: NSObject {
     public lazy var objects = [AnyObject]()
     
     public var numberOfRows: Int {
-        if self.hidden {
-            return 0
+        set {
+            _numberOfRows = newValue
         }
+        get {
+            if self.hidden {
+                return 0
+            }
             
-        return objects.count ?? 0
+            if _numberOfRows != nil {
+                return _numberOfRows!
+            } else {
+                return objects.count ?? 0
+            }
+        }
     }
+    
+    private var _numberOfRows: Int?
+    
+//    public var numberOfRows: Int {
+//        if self.hidden {
+//            return 0
+//        }
+//            
+//        return objects.count ?? 0
+//    }
     
     public var cellIdentifierBlock: ((item: AnyObject?, indexPath: NSIndexPath) -> String)!
     public var rowHeight: CGFloat?
