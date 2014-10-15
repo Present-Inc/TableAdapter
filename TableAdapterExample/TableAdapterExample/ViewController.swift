@@ -12,6 +12,7 @@ import TableAdapter
 class ViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     var tableDataSource = TableViewDataSource()
+    var sectionOne = TableViewSection()
     
     var tableHeaderView: TableHeaderView?
     
@@ -21,13 +22,20 @@ class ViewController: UIViewController {
         "from",
         "the",
         "data",
-        "source"
+        "source",
+        "and",
+        "the",
+        "thing",
+        "they",
+        "call",
+        "my",
+        "mind"
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupHeaderView()
+        self.tableHeaderView = self.tableView.tableHeaderView as? TableHeaderView
         
         // If not using storyboards or .xib's, cell classes must be manually registered with table view
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
@@ -37,29 +45,13 @@ class ViewController: UIViewController {
         tableDataSource.tableView = tableView
         
         // !!!: Configure the section
-        var sectionOne = TableViewSection()
         sectionOne.objects = dataSource
         sectionOne.rowHeight = 50
-        sectionOne.sectionHeaderHeight = 75
-        sectionOne.sectionFooterHeight = 15
         sectionOne.cellIdentifierBlock = { _, _ in return "TestCell" }
-        sectionOne.headerConfigurationBlock = headerConfiguration
         sectionOne.cellConfigurationBlock = cellConfiguration
-        sectionOne.footerConfigurationBlock = footerConfiguration
         sectionOne.selectionBlock = cellSelectionBlock
         
         tableDataSource.addSection(sectionOne)
-    }
-    
-    func setupHeaderView() {
-        if tableHeaderView == nil {
-            tableHeaderView = TableHeaderView.nib().instantiateWithOwner(self, options: nil).first as? TableHeaderView
-            tableHeaderView?.button.hidden = true
-        }
-        
-        self.tableHeaderView?.frame = CGRectMake(0, 0, 320, 300)
-        
-        self.tableView.tableHeaderView = self.tableHeaderView
     }
     
     func headerConfiguration(section: Int) -> UIView {

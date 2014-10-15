@@ -67,17 +67,14 @@ typedef uint_least32_t char32_t;
 #endif
 
 @class UITableView;
-@protocol TableViewDataSourceDelegate;
 @class TableViewSection;
 @class NSIndexPath;
-@class UITableViewCell;
-@class UIView;
-@class UIScrollView;
+@protocol TableViewDataSourceDelegate;
 
 SWIFT_CLASS("_TtC12TableAdapter19TableViewDataSource")
 @interface TableViewDataSource : NSObject <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (nonatomic) id <TableViewDataSourceDelegate> delegate;
+@property (nonatomic, weak) id <TableViewDataSourceDelegate> delegate;
 @property (nonatomic, readonly, copy) NSArray * sections;
 @property (nonatomic, readonly) NSInteger numberOfSections;
 - (NSArray *)dataSourceForIndexPath:(NSIndexPath *)indexPath;
@@ -94,11 +91,24 @@ SWIFT_CLASS("_TtC12TableAdapter19TableViewDataSource")
 - (void)reloadSections;
 - (void)reloadSection:(NSInteger)index;
 - (id)itemForIndexPath:(NSIndexPath *)indexPath;
+- (instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class UITableViewCell;
+
+@interface TableViewDataSource (SWIFT_EXTENSION(TableAdapter)) <UITableViewDataSource>
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+@end
+
+@class UIView;
+@class UIScrollView;
+
+@interface TableViewDataSource (SWIFT_EXTENSION(TableAdapter)) <UITableViewDelegate>
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section;
@@ -107,7 +117,6 @@ SWIFT_CLASS("_TtC12TableAdapter19TableViewDataSource")
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
-- (instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
@@ -120,22 +129,33 @@ SWIFT_PROTOCOL("_TtP12TableAdapter27TableViewDataSourceDelegate_")
 
 SWIFT_CLASS("_TtC12TableAdapter16TableViewSection")
 @interface TableViewSection : NSObject
+
+/// Indicates if the receiver is hidden.
 @property (nonatomic, readonly) BOOL hidden;
+
+/// The title for the section. For book keeping purposes right now.
 @property (nonatomic, copy) NSString * title;
+
+/// The delegate for tableView methods that require an in-depth implementation.
 @property (nonatomic, readonly, weak) TableViewDataSource * controller;
+
+/// The objects to send to the cellConfigurationBlock.
 @property (nonatomic, copy) NSArray * objects;
-@property (nonatomic, readonly) NSInteger numberOfRows;
+
+/// The number of rows in the receiver.
+@property (nonatomic) NSInteger numberOfRows;
 @property (nonatomic, copy) NSString * (^ cellIdentifierBlock)(id, NSIndexPath *);
 @property (nonatomic, copy) void (^ cellConfigurationBlock)(UITableViewCell *, id, NSIndexPath *);
 @property (nonatomic, copy) UIView * (^ headerConfigurationBlock)(NSInteger);
 @property (nonatomic, copy) UIView * (^ footerConfigurationBlock)(NSInteger);
-@property (nonatomic, copy) void (^ selectionBlock)(id, NSIndexPath *);
+@property (nonatomic, copy) void (^ selectionBlock)(UITableViewCell *, NSIndexPath *);
 - (instancetype)init OBJC_DESIGNATED_INITIALIZER;
 - (instancetype)initWithBuilder:(void (^)(TableViewSection *))builder OBJC_DESIGNATED_INITIALIZER;
 - (void)addObject:(id)object;
 - (void)reload;
 - (void)hide;
 - (void)show;
+- (UITableViewCell *)cellForRow:(NSInteger)rowIndex;
 @end
 
 #pragma clang diagnostic pop

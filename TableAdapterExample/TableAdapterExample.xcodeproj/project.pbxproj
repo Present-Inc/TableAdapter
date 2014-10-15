@@ -13,11 +13,12 @@
 		7C548EF519EDC97F00A7EDB6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C548EF419EDC97F00A7EDB6 /* Images.xcassets */; };
 		7C548EF819EDC97F00A7EDB6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C548EF619EDC97F00A7EDB6 /* LaunchScreen.xib */; };
 		7C548F0419EDC97F00A7EDB6 /* TableAdapterExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C548F0319EDC97F00A7EDB6 /* TableAdapterExampleTests.swift */; };
-		7C548F1719EDCB2700A7EDB6 /* TableAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C548F1619EDCB2700A7EDB6 /* TableAdapter.framework */; };
 		7C548F1D19EDCB3E00A7EDB6 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C548F1919EDCB3E00A7EDB6 /* TableHeaderView.swift */; };
 		7C548F1E19EDCB3E00A7EDB6 /* TableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C548F1A19EDCB3E00A7EDB6 /* TableHeaderView.xib */; };
 		7C548F1F19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C548F1B19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift */; };
 		7C548F2019EDCB3E00A7EDB6 /* TableSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C548F1C19EDCB3E00A7EDB6 /* TableSectionHeaderView.xib */; };
+		7CDF3E7819EF04440057B560 /* TableAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDF3E7719EF04440057B560 /* TableAdapter.framework */; };
+		7CDF3E7919EF044C0057B560 /* TableAdapter.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CDF3E7719EF04440057B560 /* TableAdapter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +31,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7CDF3E7519EF03E00057B560 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7CDF3E7919EF044C0057B560 /* TableAdapter.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		7C548EE819EDC97F00A7EDB6 /* TableAdapterExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableAdapterExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C548EEC19EDC97F00A7EDB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -41,11 +55,11 @@
 		7C548EFD19EDC97F00A7EDB6 /* TableAdapterExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableAdapterExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C548F0219EDC97F00A7EDB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C548F0319EDC97F00A7EDB6 /* TableAdapterExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAdapterExampleTests.swift; sourceTree = "<group>"; };
-		7C548F1619EDCB2700A7EDB6 /* TableAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TableAdapter.framework; sourceTree = "<group>"; };
 		7C548F1919EDCB3E00A7EDB6 /* TableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableHeaderView.swift; path = Views/TableHeaderView.swift; sourceTree = "<group>"; };
 		7C548F1A19EDCB3E00A7EDB6 /* TableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableHeaderView.xib; path = Views/TableHeaderView.xib; sourceTree = "<group>"; };
 		7C548F1B19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableSectionHeaderView.swift; path = Views/TableSectionHeaderView.swift; sourceTree = "<group>"; };
 		7C548F1C19EDCB3E00A7EDB6 /* TableSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableSectionHeaderView.xib; path = Views/TableSectionHeaderView.xib; sourceTree = "<group>"; };
+		7CDF3E7719EF04440057B560 /* TableAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TableAdapter.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C548F1719EDCB2700A7EDB6 /* TableAdapter.framework in Frameworks */,
+				7CDF3E7819EF04440057B560 /* TableAdapter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				7C548F1819EDCB3500A7EDB6 /* Views */,
-				7C548F1619EDCB2700A7EDB6 /* TableAdapter.framework */,
 				7C548EED19EDC97F00A7EDB6 /* AppDelegate.swift */,
 				7C548EEF19EDC97F00A7EDB6 /* ViewController.swift */,
 				7C548EF119EDC97F00A7EDB6 /* Main.storyboard */,
@@ -103,6 +116,7 @@
 		7C548EEB19EDC97F00A7EDB6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7CDF3E7719EF04440057B560 /* TableAdapter.framework */,
 				7C548EEC19EDC97F00A7EDB6 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -146,6 +160,7 @@
 				7C548EE419EDC97F00A7EDB6 /* Sources */,
 				7C548EE519EDC97F00A7EDB6 /* Frameworks */,
 				7C548EE619EDC97F00A7EDB6 /* Resources */,
+				7CDF3E7519EF03E00057B560 /* CopyFiles */,
 			);
 			buildRules = (
 			);

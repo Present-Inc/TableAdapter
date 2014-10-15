@@ -6,15 +6,15 @@
 	<dict>
 		<key>Headers/TableAdapter-Swift.h</key>
 		<data>
-		EL+yonwA5GZkgfa1qUYYZUKlNKY=
+		ZMgWVYz5ERMKMIdMVzMkWjsQ3t4=
 		</data>
 		<key>Headers/TableAdapter.h</key>
 		<data>
 		Y90nbwfu24vjC2b4pb2luX3X8ns=
 		</data>
-		<key>Modules/TableAdapter.swiftmodule/arm.swiftmodule</key>
+		<key>Modules/TableAdapter.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		ItS+BS2p6IT2rDHRW3XO2CKRjuo=
+		rijMd5g08XrZGpxZX6Mdfy9+Le0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -25,15 +25,15 @@
 	<dict>
 		<key>Headers/TableAdapter-Swift.h</key>
 		<data>
-		EL+yonwA5GZkgfa1qUYYZUKlNKY=
+		ZMgWVYz5ERMKMIdMVzMkWjsQ3t4=
 		</data>
 		<key>Headers/TableAdapter.h</key>
 		<data>
 		Y90nbwfu24vjC2b4pb2luX3X8ns=
 		</data>
-		<key>Modules/TableAdapter.swiftmodule/arm.swiftmodule</key>
+		<key>Modules/TableAdapter.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		ItS+BS2p6IT2rDHRW3XO2CKRjuo=
+		rijMd5g08XrZGpxZX6Mdfy9+Le0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
