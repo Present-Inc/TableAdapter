@@ -13,14 +13,29 @@ public typealias CellSelectionBlock = (cell: UITableViewCell, indexPath: NSIndex
 public typealias SupplementalViewConfigurationBlock = (section: Int) -> UIView!
 
 public class TableViewSection: NSObject {
+    /**
+        Indicates if the receiver is hidden.
+     */
     public internal(set) var hidden: Bool = false
     
+    /**
+        The title for the section. For book keeping purposes right now.
+     */
     public var title: String?
     
+    /**
+        The delegate for tableView methods that require an in-depth implementation.
+     */
     public internal(set) weak var controller: TableViewDataSource?
     
+    /**
+        The objects to send to the cellConfigurationBlock.
+     */
     public lazy var objects = [AnyObject]()
     
+    /**
+        The number of rows in the receiver.
+     */
     public var numberOfRows: Int {
         set {
             _numberOfRows = newValue
@@ -38,20 +53,10 @@ public class TableViewSection: NSObject {
         }
     }
     
-    private var _numberOfRows: Int?
-    
-//    public var numberOfRows: Int {
-//        if self.hidden {
-//            return 0
-//        }
-//            
-//        return objects.count ?? 0
-//    }
-    
     public var cellIdentifierBlock: ((item: AnyObject?, indexPath: NSIndexPath) -> String)!
     public var rowHeight: CGFloat?
     
-    public var cellConfigurationBlock: CellConfigurationBlock!
+    public var cellConfigurationBlock: CellConfigurationBlock?
     public var headerConfigurationBlock: SupplementalViewConfigurationBlock?
     public var footerConfigurationBlock: SupplementalViewConfigurationBlock?
     
@@ -59,6 +64,8 @@ public class TableViewSection: NSObject {
     public var sectionFooterHeight: CGFloat?
     
     public var selectionBlock: CellSelectionBlock?
+    
+    private var _numberOfRows: Int?
     
     public override init() {
         super.init()
@@ -94,5 +101,17 @@ public class TableViewSection: NSObject {
             hidden = false
             reload()
         }
+    }
+    
+    public func cellForRow(rowIndex: Int) -> UITableViewCell? {
+        if let dataSource = controller {
+            if let tableView = dataSource.tableView {
+                if let sectionIndex = find(dataSource.sections, self) {
+                    return tableView.cellForRowAtIndexPath(NSIndexPath(forRow: rowIndex, inSection: sectionIndex))
+                }
+            }
+        }
+        
+        return nil
     }
 }

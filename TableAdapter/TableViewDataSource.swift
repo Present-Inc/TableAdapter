@@ -191,7 +191,7 @@ extension TableViewDataSource: UITableViewDataSource {
             
             cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as UITableViewCell
             
-            tableSection.cellConfigurationBlock(cell: cell, item: item, indexPath: indexPath)
+            tableSection.cellConfigurationBlock?(cell: cell, item: item, indexPath: indexPath)
             
             cell.setNeedsUpdateConstraints()
             cell.updateConstraintsIfNeeded()
