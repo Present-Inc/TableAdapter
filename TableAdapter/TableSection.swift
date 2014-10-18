@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public typealias CellConfigurationBlock = (cell: UITableViewCell, item: AnyObject?, indexPath: NSIndexPath) -> ()
 public typealias CellSelectionBlock = (cell: UITableViewCell, indexPath: NSIndexPath) -> ()
