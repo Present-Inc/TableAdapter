@@ -54,7 +54,7 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         self.sections.extend(sections)
         
         for section in sections {
-            section.controller = self
+            section.dataSource = self
         }
         
         self.tableView.reloadData()
@@ -67,16 +67,16 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     public func insertSection(section: TableViewSection, atIndex index: Int) {
         self.sections.insert(section, atIndex: index)
         
-        section.controller = self
+        section.dataSource = self
         
-        self.tableView.reloadData()
+        self.reloadSection(index)
     }
     
     // MARK: Delete Sections
     
     public func deleteAllSections() {
         for section in sections {
-            section.controller = nil
+            section.dataSource = nil
         }
         
         self.sections.removeAll(keepCapacity: false)
@@ -97,17 +97,21 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     }
     
     public func deleteSectionAtIndex(index: Int) {
-        var section = self.sections[index]
-        section.controller = nil
-        
-        self.sections.removeAtIndex(index)
-        self.tableView.reloadData()
+        if isValidIndex(index) {
+            let section = self.sections[index]
+            section.dataSource = nil
+            
+            self.sections.removeAtIndex(index)
+            self.reloadSection(index)
+        }
     }
     
     // MARK: Hide Section
     
     public func hideSectionAtIndex(index: Int) {
-        self.sections[index].hide()
+        if isValidIndex(index) {
+            self.sections[index].hide()
+        }
     }
     
     public func hideSectionsInRange(range: Range<Int>) {
@@ -118,22 +122,18 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     
     // MARK: Show Sections
     public func showSectionAtIndex(index: Int) {
-        self.sections[index].show()
+        if isValidIndex(index) {
+            self.sections[index].show()
+        }
     }
     
     // MARK: Replace Sections
     
     public func replaceSectionAtIndex(index: Int, withSection section: TableViewSection) {
-        if index >= 0 && index < self.numberOfSections {
-            var oldSection = self.sections[index]
-            oldSection.controller = nil
-            self.sections.removeAtIndex(index)
-            
-            self.sections.insert(section, atIndex: index)
-            section.controller = self
+        if isValidIndex(index) {
+            self.deleteSectionAtIndex(index)
+            self.insertSection(section, atIndex: index)
         }
-        
-        self.tableView.reloadData()
     }
     
     // MARK: Reload Sections
@@ -142,17 +142,17 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         self.tableView.reloadData()
     }
     
-    public func reloadSection(index: Int) {
-        self.tableView.reloadSections(NSIndexSet(index: index), withRowAnimation: .None)
+    public func reloadSection(index: Int, withRowAnimation animation: UITableViewRowAnimation = .None) {
+        self.tableView.reloadSections(NSIndexSet(index: index), withRowAnimation: animation)
     }
     
-    public func reloadSectionsInRange(range: Range<Int>, withRowAnimation animation: UITableViewRowAnimation? = .None) {
-        var rangeToReload = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex)
+    public func reloadSectionsInRange(range: Range<Int>, withRowAnimation animation: UITableViewRowAnimation = .None) {
+        let rangeToReload = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex)
         self.reloadSectionsInRange(rangeToReload, withRowAnimation: animation)
     }
     
-    public func reloadSectionsInRange(range: NSRange, withRowAnimation animation: UITableViewRowAnimation? = .None) {
-        self.tableView.reloadSections(NSIndexSet(indexesInRange: range), withRowAnimation: animation!)
+    public func reloadSectionsInRange(range: NSRange, withRowAnimation animation: UITableViewRowAnimation = .None) {
+        self.tableView.reloadSections(NSIndexSet(indexesInRange: range), withRowAnimation: animation)
     }
     
     public func itemForIndexPath(indexPath: NSIndexPath) -> AnyObject? {
@@ -190,7 +190,6 @@ extension TableViewDataSource: UITableViewDataSource {
             let reuseIdentifier = tableSection.cellIdentifierBlock(item: item, indexPath: indexPath)
             
             cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as UITableViewCell
-            
             tableSection.cellConfigurationBlock?(cell: cell, item: item, indexPath: indexPath)
             
             cell.setNeedsUpdateConstraints()
@@ -208,15 +207,33 @@ extension TableViewDataSource: UITableViewDataSource {
 extension TableViewDataSource: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return self.tableSectionForIndex(section)?.headerConfigurationBlock?(section: section) ?? nil
+        if let tableSection = self.tableSectionForIndex(section) {
+            if !tableSection.hidden {
+                return tableSection.headerConfigurationBlock?(section: section) ?? nil
+            }
+        }
+        
+        return nil
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return self.tableSectionForIndex(section)?.footerConfigurationBlock?(section: section) ?? nil
+        if let tableSection = self.tableSectionForIndex(section) {
+            if !tableSection.hidden {
+                return tableSection.footerConfigurationBlock?(section: section) ?? nil
+            }
+        }
+        
+        return nil
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.tableSectionForIndex(section)?.sectionHeaderHeight ?? tableView.sectionHeaderHeight
+        if let tableSection = self.tableSectionForIndex(section) {
+            if !tableSection.hidden {
+                return tableSection.sectionHeaderHeight ?? 0
+            }
+        }
+        
+        return 0
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -224,7 +241,7 @@ extension TableViewDataSource: UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return self.tableSectionForIndex(section)?.sectionFooterHeight ?? tableView.sectionFooterHeight
+        return self.tableSectionForIndex(section)?.sectionFooterHeight ?? 0
     }
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -251,4 +268,10 @@ extension TableViewDataSource: UITableViewDelegate {
         delegate?.tableViewDidScroll?(scrollView)
     }
     
+}
+
+private extension TableViewDataSource {
+    func isValidIndex(index: Int) -> Bool {
+        return index >= 0 && index < numberOfSections
+    }
 }

@@ -15,6 +15,11 @@ public typealias SupplementalViewConfigurationBlock = (section: Int) -> UIView!
 
 public class TableViewSection: NSObject {
     /**
+        The delegate for tableView methods that require an in-depth implementation.
+     */
+    public internal(set) weak var dataSource: TableViewDataSource?
+    
+    /**
         Indicates if the receiver is hidden.
      */
     public internal(set) var hidden: Bool = false
@@ -25,18 +30,22 @@ public class TableViewSection: NSObject {
     public var title: String?
     
     /**
-        The delegate for tableView methods that require an in-depth implementation.
-     */
-    public internal(set) weak var controller: TableViewDataSource?
-    
-    /**
         The objects to send to the cellConfigurationBlock.
      */
     public lazy var objects = [AnyObject]()
     
-    /**
-        The number of rows in the receiver.
-     */
+    public var cellIdentifierBlock: ((item: AnyObject?, indexPath: NSIndexPath) -> String)!
+    public var rowHeight: CGFloat?
+    
+    public var cellConfigurationBlock: CellConfigurationBlock?
+    public var headerConfigurationBlock: SupplementalViewConfigurationBlock?
+    public var footerConfigurationBlock: SupplementalViewConfigurationBlock?
+    
+    public var sectionHeaderHeight: CGFloat?
+    public var sectionFooterHeight: CGFloat?
+    
+    public var selectionBlock: CellSelectionBlock?
+    
     public var numberOfRows: Int {
         set {
             _numberOfRows = newValue
@@ -54,17 +63,13 @@ public class TableViewSection: NSObject {
         }
     }
     
-    public var cellIdentifierBlock: ((item: AnyObject?, indexPath: NSIndexPath) -> String)!
-    public var rowHeight: CGFloat?
-    
-    public var cellConfigurationBlock: CellConfigurationBlock?
-    public var headerConfigurationBlock: SupplementalViewConfigurationBlock?
-    public var footerConfigurationBlock: SupplementalViewConfigurationBlock?
-    
-    public var sectionHeaderHeight: CGFloat?
-    public var sectionFooterHeight: CGFloat?
-    
-    public var selectionBlock: CellSelectionBlock?
+    public var sectionIndex: Int? {
+        if let dataSource = dataSource {
+            return find(dataSource.sections, self)
+        }
+            
+        return nil
+    }
     
     private var _numberOfRows: Int?
     
@@ -83,10 +88,9 @@ public class TableViewSection: NSObject {
     }
     
     public func reload() {
-        if let dataSource = controller {
-            if let sectionIndex = find(dataSource.sections, self) {
-                dataSource.reloadSection(sectionIndex)
-            }
+        if let sectionIndex = sectionIndex {
+            //dataSource?.reloadSection(sectionIndex)
+            dataSource?.reloadSections()
         }
     }
     
@@ -105,12 +109,8 @@ public class TableViewSection: NSObject {
     }
     
     public func cellForRow(rowIndex: Int) -> UITableViewCell? {
-        if let dataSource = controller {
-            if let tableView = dataSource.tableView {
-                if let sectionIndex = find(dataSource.sections, self) {
-                    return tableView.cellForRowAtIndexPath(NSIndexPath(forRow: rowIndex, inSection: sectionIndex))
-                }
-            }
+        if let sectionIndex = sectionIndex {
+            return dataSource?.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: rowIndex, inSection: sectionIndex))
         }
         
         return nil
