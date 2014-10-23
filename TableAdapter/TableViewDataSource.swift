@@ -10,7 +10,10 @@ import Foundation
 import UIKit
 
 @objc public protocol TableViewDataSourceDelegate {
-    optional func tableViewDidScroll(tableView: UIScrollView)
+    optional func scrollViewDidScroll(scrollView: UIScrollView)
+    optional func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
+    optional func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    optional func scrollViewDidEndDecelerating(scrollView: UIScrollView)
 }
 
 public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
@@ -264,10 +267,21 @@ extension TableViewDataSource: UITableViewDelegate {
     
     // MARK: UIScrollViewDelegate
     
-    public func scrollViewDidScroll(scrollView: UIScrollView!) {
-        delegate?.tableViewDidScroll?(scrollView)
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        delegate?.scrollViewDidScroll?(scrollView)
     }
     
+    public func scrollWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        delegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
+    
+    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+    }
+    
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        delegate?.scrollViewDidEndDecelerating?(scrollView)
+    }
 }
 
 private extension TableViewDataSource {
