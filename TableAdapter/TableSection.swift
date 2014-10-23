@@ -35,6 +35,7 @@ public class TableViewSection: NSObject {
     public lazy var objects = [AnyObject]()
     
     public var cellIdentifierBlock: ((item: AnyObject?, indexPath: NSIndexPath) -> String)!
+    public var estimatedRowHeight: CGFloat?
     public var rowHeight: CGFloat?
     
     public var cellConfigurationBlock: CellConfigurationBlock?

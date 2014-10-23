@@ -183,22 +183,23 @@ extension TableViewDataSource: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell!
-        
         if let tableSection = self.tableSectionForIndexPath(indexPath) {
+            assert(tableSection.cellIdentifierBlock != nil, "A TableSection must implement cellIdentifierBlock")
+            
             let item: AnyObject? = self.itemForIndexPath(indexPath)
             let reuseIdentifier = tableSection.cellIdentifierBlock(item: item, indexPath: indexPath)
             
-            cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as UITableViewCell
-            tableSection.cellConfigurationBlock?(cell: cell, item: item, indexPath: indexPath)
-            
-            cell.setNeedsUpdateConstraints()
-            cell.updateConstraintsIfNeeded()
-        } else {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
+            if let cell = self.tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as? UITableViewCell {
+                tableSection.cellConfigurationBlock?(cell: cell, item: item, indexPath: indexPath)
+                
+                cell.setNeedsUpdateConstraints()
+                cell.updateConstraintsIfNeeded()
+                
+                return cell
+            }
         }
         
-        return cell
+        return UITableViewCell(style: .Default, reuseIdentifier: "Cell")
     }
     
 }
