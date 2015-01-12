@@ -11,6 +11,8 @@ import UIKit
 
 public typealias CellConfigurationBlock = (cell: UITableViewCell, item: AnyObject?, indexPath: NSIndexPath) -> ()
 public typealias CellSelectionBlock = (cell: UITableViewCell, indexPath: NSIndexPath) -> ()
+public typealias CellIdentifierBlock = (item: AnyObject?, indexPath: NSIndexPath) -> String
+
 public typealias SupplementalViewConfigurationBlock = (section: Int) -> UIView!
 
 public class TableViewSection: NSObject {
@@ -32,9 +34,9 @@ public class TableViewSection: NSObject {
     /**
         The objects to send to the cellConfigurationBlock.
      */
-    public lazy var objects = [AnyObject]()
+    public lazy var objects: [AnyObject] = []
     
-    public var cellIdentifierBlock: ((item: AnyObject?, indexPath: NSIndexPath) -> String)!
+    public var cellIdentifierBlock: CellIdentifierBlock!
     public var estimatedRowHeight: CGFloat?
     public var rowHeight: CGFloat?
     
@@ -42,8 +44,8 @@ public class TableViewSection: NSObject {
     public var headerConfigurationBlock: SupplementalViewConfigurationBlock?
     public var footerConfigurationBlock: SupplementalViewConfigurationBlock?
     
-    public var sectionHeaderHeight: CGFloat?
-    public var sectionFooterHeight: CGFloat?
+    public var headerHeight: CGFloat?
+    public var footerHeight: CGFloat?
     
     public var selectionBlock: CellSelectionBlock?
     
@@ -62,6 +64,14 @@ public class TableViewSection: NSObject {
                 return objects.count ?? 0
             }
         }
+    }
+    
+    public var isEmpty: Bool {
+        if _numberOfRows != nil {
+            return _numberOfRows == 0
+        }
+        
+        return objects.count == 0
     }
     
     public var sectionIndex: Int? {
