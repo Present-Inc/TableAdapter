@@ -258,7 +258,7 @@ extension TableViewDataSource: UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return tableSectionForIndex(indexPath.section)?.rowHeight ?? tableView.estimatedRowHeight
+        return tableSectionForIndex(indexPath.section)?.estimatedRowHeight ?? tableView.estimatedRowHeight
     }
     
     public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
