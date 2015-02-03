@@ -26,7 +26,7 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     
     public weak var delegate: TableViewDataSourceDelegate?
     
-    public internal(set) var sections: [TableViewSection] = [TableViewSection]()
+    public internal(set) var sections: [TableViewSection] = []
     public var numberOfSections: Int {
         return sections.count
     }
@@ -44,7 +44,7 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     }
     
     public func tableSectionForIndex(index: Int) -> TableViewSection? {
-        if index >= 0 && index < sections.count {
+        if isValidIndex(index) {
             return sections[index]
         }
         
@@ -89,11 +89,11 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     public func deleteSectionsInRange(range: Range<Int>) {
         println("Delete sections \(range.startIndex) to \(range.endIndex)")
         
-        var objcRange = NSMakeRange(range.startIndex, range.endIndex - range.startIndex)
+        let objcRange = NSMakeRange(range.startIndex, range.endIndex - range.startIndex)
         
         println("Delete sections \(objcRange.location) to \(objcRange.location + objcRange.length)")
         
-        var indexSet = NSIndexSet(indexesInRange: objcRange)
+        let indexSet = NSIndexSet(indexesInRange: objcRange)
         tableView.deleteSections(indexSet, withRowAnimation: .None)
         
         // TODO: Set the sections controller to nil
@@ -105,7 +105,7 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             section.dataSource = nil
             
             sections.removeAtIndex(index)
-            reloadSection(index)
+            tableView.reloadData()
         }
     }
     
@@ -145,17 +145,19 @@ public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.reloadData()
     }
     
-    public func reloadSection(index: Int, withRowAnimation animation: UITableViewRowAnimation = .None) {
-        tableView.reloadSections(NSIndexSet(index: index), withRowAnimation: animation)
+    public func reloadSection(index: Int, withRowAnimation animation: UITableViewRowAnimation? = .None) {
+        let indexSet = NSIndexSet(index: index)
+        tableView.reloadSections(indexSet, withRowAnimation: animation ?? .None)
     }
     
-    public func reloadSectionsInRange(range: Range<Int>, withRowAnimation animation: UITableViewRowAnimation = .None) {
+    public func reloadSectionsInRange(range: Range<Int>, withRowAnimation animation: UITableViewRowAnimation? = .None) {
         let rangeToReload = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex)
         reloadSectionsInRange(rangeToReload, withRowAnimation: animation)
     }
     
-    public func reloadSectionsInRange(range: NSRange, withRowAnimation animation: UITableViewRowAnimation = .None) {
-        tableView.reloadSections(NSIndexSet(indexesInRange: range), withRowAnimation: animation)
+    public func reloadSectionsInRange(range: NSRange, withRowAnimation animation: UITableViewRowAnimation? = .None) {
+        let indexSet = NSIndexSet(indexesInRange: range)
+        tableView.reloadSections(indexSet, withRowAnimation: animation!)
     }
     
     public func itemForIndexPath(indexPath: NSIndexPath) -> AnyObject? {
@@ -185,22 +187,31 @@ extension TableViewDataSource: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        // Get the table section
         if let tableSection = tableSectionForIndexPath(indexPath) {
-            assert(tableSection.cellIdentifierBlock != nil, "A TableSection must implement cellIdentifierBlock")
+            assert(tableSection.cellIdentifier != nil, "A TableSection must implement cellIdentifierBlock")
             
+            // Get the item
             let item: AnyObject? = itemForIndexPath(indexPath)
-            let reuseIdentifier = tableSection.cellIdentifierBlock(item: item, indexPath: indexPath)
             
+            // Get the cell's reuse identifier
+            let reuseIdentifier = tableSection.cellIdentifier(item: item, indexPath: indexPath)
+            
+            // Dequeue a cell
             if let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as? UITableViewCell {
-                tableSection.cellConfigurationBlock?(cell: cell, item: item, indexPath: indexPath)
+                // Invoke the section's cell configuration
+                tableSection.cellConfiguration?(cell: cell, item: item, indexPath: indexPath)
                 
+                // Update constraints
                 cell.setNeedsUpdateConstraints()
                 cell.updateConstraintsIfNeeded()
                 
+                // Return the cell
                 return cell
             }
         }
         
+        // Return a default UITableViewCell
         return UITableViewCell(style: .Default, reuseIdentifier: "Cell")
     }
     
@@ -212,9 +223,12 @@ extension TableViewDataSource: UITableViewDelegate {
     // MARK: Header and Footer View
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // Get the section
         if let tableSection = tableSectionForIndex(section) {
+            // If the section's not hidden...
             if !tableSection.hidden {
-                return tableSection.headerConfigurationBlock?(section: section) ?? nil
+                // Invoke the section's headerConfiguration
+                return tableSection.headerConfiguration?(section: section) ?? nil
             }
         }
         
@@ -222,33 +236,16 @@ extension TableViewDataSource: UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        // Get the section
         if let tableSection = tableSectionForIndex(section) {
+            // If the section's not hidden
             if !tableSection.hidden {
-                return tableSection.footerConfigurationBlock?(section: section) ?? nil
+                // Invoke the section's footerConfiguartion
+                return tableSection.footerConfiguration?(section: section) ?? nil
             }
         }
         
         return nil
-    }
-    
-    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let tableSection = tableSectionForIndex(section) {
-            if !tableSection.hidden {
-                return tableSection.headerHeight ?? 0
-            }
-        }
-        
-        return 0
-    }
-    
-    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if let tableSection = tableSectionForIndex(section) {
-            if !tableSection.hidden {
-                return tableSection.footerHeight ?? 0
-            }
-        }
-        
-        return 0
     }
     
     // MARK: View Height
@@ -256,6 +253,32 @@ extension TableViewDataSource: UITableViewDelegate {
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return tableSectionForIndex(indexPath.section)?.rowHeight ?? UITableViewAutomaticDimension
     }
+    
+    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        var headerHeight: CGFloat = 0
+        
+        if let tableSection = tableSectionForIndex(section) {
+            if !tableSection.hidden {
+                headerHeight = tableSection.headerHeight
+            }
+        }
+        
+        return headerHeight
+    }
+    
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        var footerHeight: CGFloat = 0
+        
+        if let tableSection = tableSectionForIndex(section) {
+            if !tableSection.hidden {
+                footerHeight = tableSection.footerHeight
+            }
+        }
+        
+        return footerHeight
+    }
+    
+    // MARK: Estimated View Height
     
     public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return tableSectionForIndex(indexPath.section)?.estimatedRowHeight ?? tableView.estimatedRowHeight
@@ -269,9 +292,11 @@ extension TableViewDataSource: UITableViewDelegate {
         return tableSectionForIndex(section)?.footerHeight ?? tableView.estimatedSectionFooterHeight
     }
     
+    // MARK: Selection
+    
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-            tableSectionForIndexPath(indexPath)?.selectionBlock?(cell: cell, indexPath: indexPath)
+            tableSectionForIndexPath(indexPath)?.cellSelection?(cell: cell, indexPath: indexPath)
         }
     }
     

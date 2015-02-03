@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-public typealias CellConfigurationBlock = (cell: UITableViewCell, item: AnyObject?, indexPath: NSIndexPath) -> ()
-public typealias CellSelectionBlock = (cell: UITableViewCell, indexPath: NSIndexPath) -> ()
-public typealias CellIdentifierBlock = (item: AnyObject?, indexPath: NSIndexPath) -> String
+public typealias CellConfiguration = (cell: UITableViewCell, item: AnyObject?, indexPath: NSIndexPath) -> Void
+public typealias CellSelection = (cell: UITableViewCell, indexPath: NSIndexPath) -> Void
+public typealias CellIdentifier = (item: AnyObject?, indexPath: NSIndexPath) -> String
 
-public typealias SupplementalViewConfigurationBlock = (section: Int) -> UIView!
+public typealias SupplementalViewConfiguration = (section: Int) -> UIView
 
 public class TableViewSection: NSObject {
     /**
-        The delegate for tableView methods that require an in-depth implementation.
+        The section's data source.
      */
     public internal(set) weak var dataSource: TableViewDataSource?
     
@@ -36,18 +36,17 @@ public class TableViewSection: NSObject {
      */
     public lazy var objects: [AnyObject] = []
     
-    public var cellIdentifierBlock: CellIdentifierBlock!
     public var estimatedRowHeight: CGFloat?
     public var rowHeight: CGFloat?
+    public var headerHeight: CGFloat = 0
+    public var footerHeight: CGFloat = 0
     
-    public var cellConfigurationBlock: CellConfigurationBlock?
-    public var headerConfigurationBlock: SupplementalViewConfigurationBlock?
-    public var footerConfigurationBlock: SupplementalViewConfigurationBlock?
+    public var cellIdentifier: CellIdentifier!
+    public var cellConfiguration: CellConfiguration?
+    public var cellSelection: CellSelection?
     
-    public var headerHeight: CGFloat?
-    public var footerHeight: CGFloat?
-    
-    public var selectionBlock: CellSelectionBlock?
+    public var headerConfiguration: SupplementalViewConfiguration?
+    public var footerConfiguration: SupplementalViewConfiguration?
     
     public var numberOfRows: Int {
         set {
@@ -58,11 +57,7 @@ public class TableViewSection: NSObject {
                 return 0
             }
             
-            if _numberOfRows != nil {
-                return _numberOfRows!
-            } else {
-                return objects.count ?? 0
-            }
+            return _numberOfRows ?? objects.count
         }
     }
     
@@ -72,6 +67,16 @@ public class TableViewSection: NSObject {
         }
         
         return objects.count == 0
+    }
+    
+    /**
+        Indicates whether or not the section is active.
+    
+        A section is considered active if it's been added
+        to a TableViewDataSource instance.
+     */
+    public var isActive: Bool {
+        return dataSource != nil
     }
     
     public var sectionIndex: Int? {
@@ -93,18 +98,48 @@ public class TableViewSection: NSObject {
         builder(self)
     }
     
+    /**
+        Appends object to the section. Automatically inserts a new row
+        if the section is active.
+     */
     public func addObject(object: AnyObject) {
         objects.append(object)
-        reload()
+
+        let index = objects.count - 1
+        insertRowAtIndex(index)
     }
     
+    /**
+        Inserts `object` at `index`. Inserts a new row at `index`
+        if the section is active.
+     */
+    public func insertObject(object: AnyObject, atIndex index: Int) {
+        objects.insert(object, atIndex: index)
+        insertRowAtIndex(index)
+    }
+    
+    /**
+        Removes `object` at `index`. Removes the row at `index`
+        if the section is active.
+     */
+    public func removeObjectAtIndex(index: Int) {
+        objects.removeAtIndex(index)
+        
+        removeRowAtIndex(index)
+    }
+    
+    /**
+        Reloads the section if active.
+     */
     public func reload() {
         if let sectionIndex = sectionIndex {
-            //dataSource?.reloadSection(sectionIndex)
-            dataSource?.reloadSections()
+            dataSource?.reloadSection(sectionIndex)
         }
     }
     
+    /**
+        Hides and reloads the section.
+     */
     public func hide() {
         if !hidden {
             hidden = true
@@ -112,6 +147,9 @@ public class TableViewSection: NSObject {
         }
     }
     
+    /**
+        Shows and reloads the section.
+     */
     public func show() {
         if hidden {
             hidden = false
@@ -119,11 +157,36 @@ public class TableViewSection: NSObject {
         }
     }
     
+    /**
+        Returns the cell for the row, if the section is active.
+     */
     public func cellForRow(rowIndex: Int) -> UITableViewCell? {
-        if let sectionIndex = sectionIndex {
-            return dataSource?.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: rowIndex, inSection: sectionIndex))
+        if let indexPath = indexPathForRowIndex(rowIndex) {
+            return dataSource?.tableView?.cellForRowAtIndexPath(indexPath)
         }
         
         return nil
+    }
+}
+
+private extension TableViewSection {
+    func indexPathForRowIndex(rowIndex: Int) -> NSIndexPath? {
+        if let sectionIndex = sectionIndex {
+            return NSIndexPath(forRow: rowIndex, inSection: sectionIndex)
+        }
+        
+        return nil
+    }
+    
+    func insertRowAtIndex(index: Int, withRowAnimation animation: UITableViewRowAnimation? = .None) {
+        if let indexPath = indexPathForRowIndex(index) {
+            dataSource?.tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: animation ?? .None)
+        }
+    }
+    
+    func removeRowAtIndex(index: Int, withRowAnimation animation: UITableViewRowAnimation? = nil) {
+        if let indexPath = indexPathForRowIndex(index) {
+            dataSource?.tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: animation ?? .None)
+        }
     }
 }

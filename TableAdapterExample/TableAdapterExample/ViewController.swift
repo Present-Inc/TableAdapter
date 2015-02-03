@@ -9,36 +9,38 @@
 import UIKit
 import TableAdapter
 
+let testData = [
+    "This is an example string that contains more than 140 characters. If I use PHPs substring function it will split it in the middle of this word.",
+    "These",
+    "are",
+    "from",
+    "the",
+    "data",
+    "source",
+    "and",
+    "the",
+    "thing",
+    "they",
+    "call",
+    "my",
+    "mind"
+]
+
 class ViewController: UIViewController {
-    @IBOutlet var tableView: UITableView!
-    var tableDataSource = TableViewDataSource()
-    var sectionOne = TableViewSection()
+    @IBOutlet private var tableView: UITableView!
+    
+    let tableDataSource = TableViewDataSource()
+    let sectionOne = TableViewSection()
     
     var tableHeaderView: TableHeaderView?
     
-    let dataSource = [
-        "These",
-        "are",
-        "from",
-        "the",
-        "data",
-        "source",
-        "and",
-        "the",
-        "thing",
-        "they",
-        "call",
-        "my",
-        "mind"
-    ]
+    var dataSource: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableHeaderView = self.tableView.tableHeaderView as? TableHeaderView
-        
         // If not using storyboards or .xib's, cell classes must be manually registered with table view
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
+        tableView.registerNib(TableViewCell.nib(), forCellReuseIdentifier: "TestCell")
         tableView.registerNib(TableSectionHeaderView.nib(), forHeaderFooterViewReuseIdentifier: "HeaderView")
         
         // !!!: You must set the TableViewDataSource tableView
@@ -46,16 +48,16 @@ class ViewController: UIViewController {
         
         // !!!: Configure the section
         sectionOne.objects = dataSource
-        sectionOne.rowHeight = 50
-        sectionOne.cellIdentifierBlock = { _, _ in return "TestCell" }
-        sectionOne.cellConfigurationBlock = cellConfiguration
-        sectionOne.selectionBlock = cellSelectionBlock
+        sectionOne.cellIdentifier = { _, _ in return "TestCell" }
+        sectionOne.cellConfiguration = cellConfiguration
+        sectionOne.cellSelection = cellSelectionBlock
+        sectionOne.estimatedRowHeight = 100
         
         tableDataSource.addSection(sectionOne)
     }
     
     func headerConfiguration(section: Int) -> UIView {
-        var headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as TableSectionHeaderView
+        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as TableSectionHeaderView
         // TODO: These should be configured with a view model
         headerView.titleLabel.text = "Hey man!"
         headerView.subtitleLabel.text = "What's up?"
@@ -64,14 +66,16 @@ class ViewController: UIViewController {
     }
     
     func cellConfiguration(cell: UITableViewCell, item: AnyObject?, indexPath: NSIndexPath) {
-        if let item = item as? String {
-            cell.textLabel?.text = item
+        let labelString = item as? String
+        
+        if let cell = cell as? TableViewCell {
+            cell.label.text = labelString!
         }
     }
     
     func footerConfiguration(section: Int) -> UIView {
         // ???: You could just make another .xib for the footer
-        var footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as TableSectionHeaderView
+        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as TableSectionHeaderView
         footerView.titleLabel.text = "This is the footer view"
         footerView.subtitleLabel.hidden = true
         
@@ -79,7 +83,25 @@ class ViewController: UIViewController {
     }
     
     func cellSelectionBlock(cell: UITableViewCell, indexPath: NSIndexPath) {
-        println("You selected \(cell) in section \(indexPath.section) at row \(indexPath.row)")
+        let index = indexPath.row
+        
+        dataSource.removeAtIndex(index)
+        sectionOne.removeObjectAtIndex(index)
+    }
+
+    @IBAction func hideSectionButtonPressed(sender: AnyObject) {
+        sectionOne.hidden ? sectionOne.show() : sectionOne.hide()
+    }
+    
+    @IBAction func addRowPressed(sender: AnyObject) {
+        let index = dataSource.count
+        if index >= testData.count {
+            return
+        }
+        
+        let newItem = testData[index]
+        dataSource.append(newItem)
+        sectionOne.addObject(newItem)
     }
 
 }
