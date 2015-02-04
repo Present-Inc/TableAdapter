@@ -37,7 +37,11 @@ public class TableViewSection: NSObject {
     public lazy var objects: [AnyObject] = []
     
     public var estimatedRowHeight: CGFloat?
-    public var rowHeight: CGFloat?
+    public var rowHeight: CGFloat? {
+        didSet {
+            estimatedRowHeight = rowHeight
+        }
+    }
     public var headerHeight: CGFloat = 0
     public var footerHeight: CGFloat = 0
     
