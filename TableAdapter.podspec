@@ -12,9 +12,9 @@ Pod::Spec.new do |s|
                    DESC
   s.homepage     = "http://github.com/Present-Inc/TableAdapter"
   s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
-  s.author             = { "Justin Makaila" => "justinmakaila@gmail.com" }
+  s.author       = { "Justin Makaila" => "justinmakaila@gmail.com" }
   s.platform     = :ios
   s.source       = { :git => "http://github.com/Present-Inc/TableAdapter.git", :tag => "0.0.1" }
-  s.source_files  = "Classes", "Classes/**/*.{h,m}"
+  s.source_files  = "TableAdapter.{h,swift}"
   s.requires_arc = true
 end
