@@ -15,6 +15,6 @@ Pod::Spec.new do |s|
   s.author       = { "Justin Makaila" => "justinmakaila@gmail.com" }
   s.platform     = :ios
   s.source       = { :git => "http://github.com/Present-Inc/TableAdapter.git", :tag => "0.0.1" }
-  s.source_files  = "TableAdapter.{h,swift}"
+  s.source_files  = "TableAdapter/*.{h,swift}"
   s.requires_arc = true
 end
