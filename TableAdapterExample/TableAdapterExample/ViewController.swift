@@ -26,7 +26,7 @@ let testData = [
     "mind"
 ]
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, TableViewDataSourceDelegate {
     @IBOutlet private var tableView: UITableView!
     
     let tableDataSource = TableViewDataSource()
@@ -45,6 +45,7 @@ class ViewController: UIViewController {
         
         // !!!: You must set the TableViewDataSource tableView
         tableDataSource.tableView = tableView
+        tableDataSource.delegate = self
         
         // !!!: Configure the section
         sectionOne.objects = dataSource
@@ -52,6 +53,7 @@ class ViewController: UIViewController {
         sectionOne.cellConfiguration = cellConfiguration
         sectionOne.cellSelection = cellSelectionBlock
         sectionOne.estimatedRowHeight = 100
+        sectionOne.canEditRow = { _ in return false }
         
         tableDataSource.addSection(sectionOne)
     }
@@ -83,8 +85,14 @@ class ViewController: UIViewController {
     }
     
     func cellSelectionBlock(cell: UITableViewCell, indexPath: NSIndexPath) {
-        let index = indexPath.row
-        
+        deleteCellAtIndex(indexPath.row)
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        deleteCellAtIndex(indexPath.row)
+    }
+    
+    func deleteCellAtIndex(index: Int) {
         dataSource.removeAtIndex(index)
         sectionOne.removeObjectAtIndex(index)
     }

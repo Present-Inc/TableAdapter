@@ -17,6 +17,7 @@
 		7C548F1E19EDCB3E00A7EDB6 /* TableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C548F1A19EDCB3E00A7EDB6 /* TableHeaderView.xib */; };
 		7C548F1F19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C548F1B19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift */; };
 		7C548F2019EDCB3E00A7EDB6 /* TableSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C548F1C19EDCB3E00A7EDB6 /* TableSectionHeaderView.xib */; };
+		7C62E7B41A8BE6BD00629517 /* TableAdapter.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 7C62E7B31A8BE6BD00629517 /* TableAdapter.podspec */; };
 		7CB6E0BF1A648599005CE2F8 /* TableAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB6E0BD1A648595005CE2F8 /* TableAdapter.framework */; };
 		7CB6E0C01A648599005CE2F8 /* TableAdapter.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CB6E0BD1A648595005CE2F8 /* TableAdapter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CB6E0C31A648608005CE2F8 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB6E0C11A648608005CE2F8 /* TableViewCell.swift */; };
@@ -61,6 +62,7 @@
 		7C548F1A19EDCB3E00A7EDB6 /* TableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableHeaderView.xib; path = Views/TableHeaderView.xib; sourceTree = "<group>"; };
 		7C548F1B19EDCB3E00A7EDB6 /* TableSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableSectionHeaderView.swift; path = Views/TableSectionHeaderView.swift; sourceTree = "<group>"; };
 		7C548F1C19EDCB3E00A7EDB6 /* TableSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableSectionHeaderView.xib; path = Views/TableSectionHeaderView.xib; sourceTree = "<group>"; };
+		7C62E7B31A8BE6BD00629517 /* TableAdapter.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TableAdapter.podspec; path = ../../TableAdapter.podspec; sourceTree = "<group>"; };
 		7CB6E0BD1A648595005CE2F8 /* TableAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TableAdapter.framework; path = "../../../../Library/Developer/Xcode/DerivedData/TableAdapter-ahgkytcxomcolhgdypghzxsgpbvs/Build/Products/Debug-iphoneos/TableAdapter.framework"; sourceTree = "<group>"; };
 		7CB6E0C11A648608005CE2F8 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = Views/TableViewCell.swift; sourceTree = "<group>"; };
 		7CB6E0C21A648608005CE2F8 /* TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableViewCell.xib; path = Views/TableViewCell.xib; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 		7C548EEB19EDC97F00A7EDB6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7C62E7B31A8BE6BD00629517 /* TableAdapter.podspec */,
 				7C548EEC19EDC97F00A7EDB6 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -237,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C62E7B41A8BE6BD00629517 /* TableAdapter.podspec in Resources */,
 				7C548F1E19EDCB3E00A7EDB6 /* TableHeaderView.xib in Resources */,
 				7CB6E0C41A648608005CE2F8 /* TableViewCell.xib in Resources */,
 				7C548EF319EDC97F00A7EDB6 /* Main.storyboard in Resources */,

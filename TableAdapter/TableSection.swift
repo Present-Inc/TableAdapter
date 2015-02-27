@@ -52,6 +52,8 @@ public class TableViewSection: NSObject {
     public var headerConfiguration: SupplementalViewConfiguration?
     public var footerConfiguration: SupplementalViewConfiguration?
     
+    public var canEditRow: (rowIndex: Int) -> Bool = { _ in return false }
+    
     public var numberOfRows: Int {
         set {
             _numberOfRows = newValue
@@ -95,11 +97,6 @@ public class TableViewSection: NSObject {
     
     public override init() {
         super.init()
-    }
-    
-    public init(builder: (TableViewSection) -> ()) {
-        super.init()
-        builder(self)
     }
     
     /**
@@ -170,6 +167,10 @@ public class TableViewSection: NSObject {
         }
         
         return nil
+    }
+    
+    public func canEditRowAtIndex(index: Int) -> Bool {
+        return canEditRow(rowIndex: index)
     }
 }
 

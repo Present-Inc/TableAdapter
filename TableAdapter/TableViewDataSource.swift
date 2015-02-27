@@ -14,6 +14,7 @@ import UIKit
     optional func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
     optional func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     optional func scrollViewDidEndDecelerating(scrollView: UIScrollView)
+    optional func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
 }
 
 public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
@@ -213,6 +214,14 @@ extension TableViewDataSource: UITableViewDataSource {
         
         // Return a default UITableViewCell
         return UITableViewCell(style: .Default, reuseIdentifier: "Cell")
+    }
+    
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return tableSectionForIndex(indexPath.section)?.canEditRowAtIndex(indexPath.row) ?? false
+    }
+    
+    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        delegate?.tableView?(tableView, commitEditingStyle: editingStyle, forRowAtIndexPath: indexPath)
     }
     
 }
