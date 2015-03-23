@@ -16,14 +16,15 @@ To set up your table view, you must:
 
 ````
 class ExampleViewController: UIViewController {
+    let viewModel = ExampleViewModel()
+
     @IBOutlet var tableView: UITableView!
-    var dataSource = TableViewDataSource()
+    var tableDataSource = TableViewDataSource()
+    
     
     // Other properties...
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func setupTableView() {
         // !!!: If not using storyboards or .xib's, cell classes must be manually registered with table view
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
         tableView.registerNib(TableSectionHeaderView.nib(), forHeaderFooterViewReuseIdentifier: "HeaderView")
@@ -33,15 +34,15 @@ class ExampleViewController: UIViewController {
         
         // !!!: Configure the section
         var sectionOne = TableViewSection()
-        sectionOne.objects = dataSource
+        sectionOne.objects = viewModel.dataSource
         sectionOne.rowHeight = 50
         sectionOne.sectionHeaderHeight = 75
         sectionOne.sectionFooterHeight = 15
-        sectionOne.cellIdentifierBlock = { _, _ in return "TestCell" }
-        sectionOne.headerConfigurationBlock = headerConfiguration
-        sectionOne.cellConfigurationBlock = cellConfiguration
-        sectionOne.footerConfigurationBlock = footerConfiguration
-        sectionOne.selectionBlock = cellSelectionBlock
+        sectionOne.cellIdentifier = { _, _ in return "TestCell" }
+        sectionOne.headerConfiguration = headerConfiguration()
+        sectionOne.cellConfiguration = cellConfiguration()
+        sectionOne.footerConfiguration = footerConfiguration()
+        sectionOne.selectionBlock = cellSelectionBlock()
         
         tableDataSource.addSection(sectionOne)
     }
@@ -58,7 +59,7 @@ Add the library as a git submodule and then add the `.xcodeproj` to your project
 File an issue and we'll be happy to help.
 
 ###TODO:
- - [ ] Show/hide sections
+ - [X] Show/hide sections
  - [ ] Documentation
  - [ ] Tests
  - [ ] Exceptions for `DEBUG` builds
