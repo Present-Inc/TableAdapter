@@ -92,6 +92,16 @@ class ViewController: UIViewController, TableViewDataSourceDelegate {
         deleteCellAtIndex(indexPath.row)
     }
     
+    func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+        var titles = [UITableViewIndexSearch, "#"]
+        
+        for title in UILocalizedIndexedCollation.currentCollation().sectionTitles as [NSString] {
+            titles.append(title)
+        }
+        
+        return titles
+    }
+    
     func deleteCellAtIndex(index: Int) {
         dataSource.removeAtIndex(index)
         sectionOne.removeObjectAtIndex(index)

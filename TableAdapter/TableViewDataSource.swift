@@ -15,9 +15,11 @@ import UIKit
     optional func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
     optional func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     optional func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+
+    optional func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]!
 }
 
-public class TableViewDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+public class TableViewDataSource: NSObject {
     @IBOutlet weak public var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
@@ -222,6 +224,10 @@ extension TableViewDataSource: UITableViewDataSource {
     
     public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         delegate?.tableView?(tableView, commitEditingStyle: editingStyle, forRowAtIndexPath: indexPath)
+    }
+    
+    public func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+        return delegate?.sectionIndexTitlesForTableView?(tableView)
     }
     
 }

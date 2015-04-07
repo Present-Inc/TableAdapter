@@ -15,6 +15,8 @@ public typealias CellIdentifier = (item: AnyObject?, indexPath: NSIndexPath) -> 
 
 public typealias SupplementalViewConfiguration = (section: Int) -> UIView
 
+public typealias TableCellCanEdit = (rowIndex: Int) -> Bool
+
 public class TableViewSection: NSObject {
     /**
         The section's data source.
@@ -52,7 +54,7 @@ public class TableViewSection: NSObject {
     public var headerConfiguration: SupplementalViewConfiguration?
     public var footerConfiguration: SupplementalViewConfiguration?
     
-    public var canEditRow: (rowIndex: Int) -> Bool = { _ in return false }
+    public var canEditRow: TableCellCanEdit = { _ in return false }
     
     public var numberOfRows: Int {
         set {
