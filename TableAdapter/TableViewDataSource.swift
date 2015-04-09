@@ -185,8 +185,8 @@ extension TableViewDataSource: UITableViewDataSource {
         return tableSectionForIndex(section)?.numberOfRows ?? 0
     }
     
-    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
-        return tableSectionForIndex(section)?.title? ?? ""
+    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return tableSectionForIndex(section)?.title ?? ""
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

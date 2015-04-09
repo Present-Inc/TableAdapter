@@ -59,7 +59,7 @@ class ViewController: UIViewController, TableViewDataSourceDelegate {
     }
     
     func headerConfiguration(section: Int) -> UIView {
-        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as TableSectionHeaderView
+        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as! TableSectionHeaderView
         // TODO: These should be configured with a view model
         headerView.titleLabel.text = "Hey man!"
         headerView.subtitleLabel.text = "What's up?"
@@ -77,7 +77,7 @@ class ViewController: UIViewController, TableViewDataSourceDelegate {
     
     func footerConfiguration(section: Int) -> UIView {
         // ???: You could just make another .xib for the footer
-        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as TableSectionHeaderView
+        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as! TableSectionHeaderView
         footerView.titleLabel.text = "This is the footer view"
         footerView.subtitleLabel.hidden = true
         
@@ -95,7 +95,7 @@ class ViewController: UIViewController, TableViewDataSourceDelegate {
     func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
         var titles = [UITableViewIndexSearch, "#"]
         
-        for title in UILocalizedIndexedCollation.currentCollation().sectionTitles as [NSString] {
+        for title in UILocalizedIndexedCollation.currentCollation().sectionTitles as! [String] {
             titles.append(title)
         }
         
