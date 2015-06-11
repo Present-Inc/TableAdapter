@@ -1,14 +1,10 @@
 Pod::Spec.new do |s|
   s.name         = "TableAdapter"
   s.version      = "0.0.1"
-  s.summary      = "A short description of TableAdapter."
+  s.summary      = "A drop in replacement for UITableViewDataSource and UITableViewDelegate"
   s.description  = <<-DESC
-                   A longer description of TableAdapter in Markdown format.
-
-                   * Think: Why did you write this? What is the focus? What does it do?
-                   * CocoaPods will be using this to generate tags, and improve search results.
-                   * Try to keep it short, snappy and to the point.
-                   * Finally, don't worry about the indent, CocoaPods strips it!
+                   This library is meant to provide a model-based approach for configuring table views.
+                   It allows a for displaying multiple cell classes in a section, dynamic sizing, and easy insertion/deletion.
                    DESC
   s.homepage     = "http://github.com/Present-Inc/TableAdapter"
   s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
